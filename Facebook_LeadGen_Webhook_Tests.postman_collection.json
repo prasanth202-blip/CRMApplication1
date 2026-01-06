@@ -1,0 +1,83 @@
+{
+  "info": {
+    "name": "Facebook LeadGen Webhook",
+    "description": "Test collection for Meta (Facebook) LeadGen webhook integration",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "1. Verify Webhook (GET)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://yourdomain.com/api/meta/webhook?hub.mode=subscribe&hub.verify_token=MY_SECRET_TOKEN_123&hub.challenge=test_challenge_12345",
+          "protocol": "https",
+          "host": ["yourdomain", "com"],
+          "path": ["api", "meta", "webhook"],
+          "query": [
+            {
+              "key": "hub.mode",
+              "value": "subscribe"
+            },
+            {
+              "key": "hub.verify_token",
+              "value": "MY_SECRET_TOKEN_123"
+            },
+            {
+              "key": "hub.challenge",
+              "value": "test_challenge_12345"
+            }
+          ]
+        },
+        "description": "Facebook will call this to verify the webhook. Should return the challenge value."
+      }
+    },
+    {
+      "name": "2. Send Lead Data (POST)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"object\": \"page\",\n  \"entry\": [\n    {\n      \"id\": \"123456789\",\n      \"time\": 1735738539,\n      \"changes\": [\n        {\n          \"field\": \"leadgen\",\n          \"value\": {\n            \"leadgen_id\": \"738292918\",\n            \"created_time\": \"2025-01-02T10:10:10+0000\",\n            \"field_data\": [\n              { \"name\": \"first_name\", \"values\": [\"Mahi\"] },\n              { \"name\": \"last_name\", \"values\": [\"Reddy\"] },\n              { \"name\": \"phone_number\", \"values\": [\"9876543210\"] },\n              { \"name\": \"bhk\", \"values\": [\"3 BHK\"] },\n              { \"name\": \"location\", \"values\": [\"Hyderabad\"] },\n              { \"name\": \"budget\", \"values\": [\"80 Lakhs\"] }\n            ]\n          }\n        }\n      ]\n    }\n  ]\n}"
+        },
+        "url": {
+          "raw": "https://yourdomain.com/api/meta/webhook",
+          "protocol": "https",
+          "host": ["yourdomain", "com"],
+          "path": ["api", "meta", "webhook"]
+        },
+        "description": "Facebook will POST lead data to this endpoint. Test with sample lead data."
+      }
+    },
+    {
+      "name": "3. Send Multiple Leads (POST)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"object\": \"page\",\n  \"entry\": [\n    {\n      \"id\": \"123456789\",\n      \"time\": 1735738539,\n      \"changes\": [\n        {\n          \"field\": \"leadgen\",\n          \"value\": {\n            \"leadgen_id\": \"738292918\",\n            \"created_time\": \"2025-01-02T10:10:10+0000\",\n            \"field_data\": [\n              { \"name\": \"first_name\", \"values\": [\"Ravi\"] },\n              { \"name\": \"last_name\", \"values\": [\"Kumar\"] },\n              { \"name\": \"phone_number\", \"values\": [\"9999888877\"] },\n              { \"name\": \"bhk\", \"values\": [\"2 BHK\"] },\n              { \"name\": \"location\", \"values\": [\"Bangalore\"] },\n              { \"name\": \"budget\", \"values\": [\"60 Lakhs\"] }\n            ]\n          }\n        },\n        {\n          \"field\": \"leadgen\",\n          \"value\": {\n            \"leadgen_id\": \"738292919\",\n            \"created_time\": \"2025-01-02T10:15:10+0000\",\n            \"field_data\": [\n              { \"name\": \"first_name\", \"values\": [\"Priya\"] },\n              { \"name\": \"last_name\", \"values\": [\"Sharma\"] },\n              { \"name\": \"phone_number\", \"values\": [\"8888777766\"] },\n              { \"name\": \"bhk\", \"values\": [\"4 BHK\"] },\n              { \"name\": \"location\", \"values\": [\"Mumbai\"] },\n              { \"name\": \"budget\", \"values\": [\"1.2 Crore\"] }\n            ]\n          }\n        }\n      ]\n    }\n  ]\n}"
+        },
+        "url": {
+          "raw": "https://yourdomain.com/api/meta/webhook",
+          "protocol": "https",
+          "host": ["yourdomain", "com"],
+          "path": ["api", "meta", "webhook"]
+        },
+        "description": "Test with multiple leads in single webhook call"
+      }
+    }
+  ]
+}
