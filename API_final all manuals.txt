@@ -1,0 +1,85 @@
+COMPLETE API REFERENCE - COPY & PASTE
+1. GRAPH API - Manual Fetch Leads
+# Fetch leads manually from Facebook Marketing API
+curl -X GET "https://yourdomain.com/api/meta/fetch-leads"
+
+
+
+2. WEBHOOK - Verification (Facebook calls this)
+# Facebook verification GET request
+curl -X GET "https://yourdomain.com/api/meta/webhook?hub.mode=subscribe&hub.verify_token=MY_SECRET_TOKEN_123&hub.challenge=test123"
+
+
+
+3. WEBHOOK - Receive Lead Data (Facebook calls this)
+# Facebook POST request with lead data
+curl -X POST "https://yourdomain.com/api/meta/webhook" \
+-H "Content-Type: application/json" \
+-d '{
+  "object": "page",
+  "entry": [{
+    "id": "123456789",
+    "time": 1234567890,
+    "changes": [{
+      "field": "leadgen",
+      "value": {
+        "leadgen_id": "987654321",
+        "created_time": "2024-01-15T10:30:00+0000",
+        "field_data": [
+          {"name": "first_name", "values": ["John"]},
+          {"name": "last_name", "values": ["Doe"]},
+          {"name": "phone_number", "values": ["9876543210"]},
+          {"name": "email", "values": ["john@example.com"]},
+          {"name": "bhk", "values": ["2BHK"]},
+          {"name": "location", "values": ["Bangalore"]},
+          {"name": "budget", "values": ["50L-1Cr"]}
+        ]
+      }
+    }]
+  }]
+}'
+
+
+
+
+4. TEST WEBHOOK - For Postman Testing
+# Test endpoint for development
+curl -X POST "https://yourdomain.com/api/meta/test-webhook" \
+-H "Content-Type: application/json" \
+-d '{
+  "firstName": "John",
+  "lastName": "Doe",
+  "phoneNumber": "9876543210",
+  "email": "john@example.com",
+  "bhk": "2BHK",
+  "location": "Bangalore",
+  "budget": "50L-1Cr"
+}'
+
+
+
+FACEBOOK WEBHOOK SETUP
+Callback URL: https://yourdomain.com/api/meta/webhook
+Verify Token: MY_SECRET_TOKEN_123
+Subscribe to: Page → leadgen
+
+
+
+
+EAAQFJ0RahEABQTeVPdrR4rSab2YK8m4FLw5NZA5JER5L7AMsq3MM2vZAyWKTZAqQm0DBBSCfZCqAAllmPLFg3DXXZALjIZCU96ilQ9BUoQOYQNMOt1FT9c1WmlZAOJ8z9iW6uGrWp90ZBy5v1nOkzWLTPdM14RTLx97ZB1CMU429wdXASQh8swW6Lt57v1dVeclv6R2klGHSF
+
+Ad account ID: 949839719500142
+ 
+120239710195180653
+ 
+Ad name
+UltrakeyIT_Training_Leads_Dec
+ID: 120239710195170653
+ 
+Ad set name
+UltrakeyIT_Training_Leads_Dec
+ID: 120239710195190653
+ 
+Campaign name
+UltrakeyIT_Training_Leads_Dec
+ID: 120239710195180653
