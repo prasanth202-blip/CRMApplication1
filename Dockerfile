@@ -3,19 +3,20 @@ WORKDIR /app
 EXPOSE 80
 EXPOSE 443
 
-FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
-COPY ["crm.csproj", "."]
-RUN dotnet restore "./crm.csproj"
+# The left side (src/CRMapp/CRMapp.csproj) must be correct relative to your build context
+COPY ["src/CRMapp/CRMapp.csproj", "src/CRMapp/"]
+RUN dotnet restore "src/CRMapp/CRMapp.csproj"
 COPY . .
 WORKDIR "/src/."
-RUN dotnet build "crm.csproj" -c Release -o /app/build
+RUN dotnet build "CRMapp.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "crm.csproj" -c Release -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "CRMapp.csproj" -c Release -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "crm.dll"]
+ENTRYPOINT ["dotnet", "CRM.dll"]
 
